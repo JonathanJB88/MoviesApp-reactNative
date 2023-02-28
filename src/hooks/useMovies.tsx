@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import movieDB from '../api/movieDB';
+import SplashScreen from 'react-native-splash-screen';
 import { MoviesResponse, Movie } from '../interfaces/movieInterface';
 
 interface MoviesState {
@@ -43,6 +44,12 @@ export const useMovies = () => {
 
   useEffect(() => {
     getMovies();
+    // getMovies().then(res => SplashScreen.hide()); // --> wait loading to hide splashscreen
+  }, []);
+
+  // Hide splash screen
+  useEffect(() => {
+    SplashScreen.hide();
   }, []);
 
   return {

@@ -1,4 +1,4 @@
-package com.moviesapp;
+package com.jonathanbracho.moviesappjonidev;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
 import com.facebook.react.PackageList;

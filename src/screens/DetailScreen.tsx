@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../navigation/Navigation';
@@ -15,6 +16,7 @@ import { useMovieDetails } from '../hooks/useMovieDetails';
 import { ActivityIndicator } from 'react-native';
 import { MovieDetails } from '../components/MovieDetails';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height: screenHeight } = Dimensions.get('screen');
 
@@ -27,6 +29,7 @@ export const DetailScreen = ({ route, navigation }: Props) => {
   const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
   const { isLoading, cast, movieFull } = useMovieDetails(movie.id);
+  const { top } = useSafeAreaInsets();
 
   return (
     <ScrollView>
@@ -46,9 +49,18 @@ export const DetailScreen = ({ route, navigation }: Props) => {
         <MovieDetails movieFull={movieFull!} cast={cast} />
       )}
       {/* Back Button */}
-      <View style={styles.backButton}>
+      <View
+        style={{
+          ...styles.backButton,
+          top: Platform.OS === 'android' ? top : top - 10,
+        }}>
         <TouchableOpacity onPress={() => navigation.pop()}>
-          <Icon color="white" name="arrow-back-outline" size={50} />
+          <Icon
+            color="white"
+            name="return-up-back-outline"
+            size={30}
+            style={styles.arrowIcon}
+          />
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -98,7 +110,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 999,
     elevation: 9,
-    top: 30,
     left: 5,
+  },
+  arrowIcon: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 7,
+    elevation: 9,
+    borderBottomEndRadius: 25,
+    borderBottomStartRadius: 25,
+    marginLeft: 5,
   },
 });

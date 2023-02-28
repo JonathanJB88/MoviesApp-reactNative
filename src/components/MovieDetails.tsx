@@ -37,7 +37,13 @@ export const MovieDetails = ({ movieFull, cast }: Props) => {
           }}>
           Overview
         </Text>
-        <Text style={{ fontSize: 16, color: 'black', marginTop: 5 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            color: 'black',
+            marginTop: 5,
+            textAlign: 'justify',
+          }}>
           {movieFull.overview}
         </Text>
 
